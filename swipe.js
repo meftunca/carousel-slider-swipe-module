@@ -1,4 +1,4 @@
-    touch (".carousel-content", {
+   touch (".carousel-content", {
         start: (e, helper) => {
             clicked = true;
             helper.trigger.style.transitionDuration = "0ms";
@@ -25,6 +25,7 @@
                         action = 0;
                         parents.lastElementChild.classList.remove ("active");
                         parents.firstElementChild.classList.add ("active");
+                        parents.style.transitionDuration = "1000ms";
                         parents.style.transform = "translate3d(" + ( action ) + "px,0px,0px)";
                     } else {
                         if (query2 || query3) {
@@ -47,6 +48,7 @@
                             action = -width * ( len - 1 );
                             parents.firstElementChild.classList.remove ("active");
                             parents.lastElementChild.classList.add ("active");
+                            parents.style.transitionDuration = "1000ms";
                             parents.style.transform = "translate3d(" + ( action ) + "px,0px,0px)";
                         } else {
                             if (query2 || query3 && Math.abs (helper.change.x) > 75) {
