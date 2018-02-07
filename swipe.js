@@ -1,14 +1,15 @@
     touch (".carousel-content", {
         start: (e, helper) => {
             clicked = true;
+            helper.trigger.style.transitionDuration = "0ms";
         }, move: (e, helper) => {
-            let width = this.innerWidth,
-                parents = e.target.parentNode,
+            let parents =helper.trigger,
+                width = Number (e.target.style.width.replace ("px", "")),
                 indis = parents.querySelector (".slide-item.active").tabIndex,
-                next = -( helper.change.x ) + ( width * indis );
+                next = -( helper.finish.x - helper.start.x) + ( width * indis );
             parents.style.cursor = "pointer";
-            parents.style.transitionDuration = "100ms";
-            parents.style.transform = "translateX(-" + ( next ) + "px)";
+            parents.style.transform = "translate3d(-" + ( next ) + "px,0px,0px)";
+            next = width * indis;
         }, end: (e, helper) => {
             let direction = helper.direction.x,
                 parents = helper.trigger,
@@ -24,15 +25,15 @@
                         action = 0;
                         parents.lastElementChild.classList.remove ("active");
                         parents.firstElementChild.classList.add ("active");
-                        parents.style.transform = "translateX(" + ( action ) + "px)";
+                        parents.style.transform = "translate3d(" + ( action ) + "px,0px,0px)";
                     } else {
                         if (query2 || query3) {
                             let active = parents.querySelector (".slide-item.active");
-                            parents.style.transform = "translateX(" + ( action ) + "px)";
+                            parents.style.transform = "translate3d(" + ( action ) + "px,0px,0px)";
                             active.classList.remove ("active");
                             active.nextElementSibling.classList.add ("active");
                         } else {
-                            parents.style.transform = "translateX(" + ( action + width ) + "px)";
+                            parents.style.transform = "translate3d(" + ( action + width ) + "px,0px,0px)";
                         }
                     }
                 },
@@ -46,14 +47,14 @@
                             action = -width * ( len - 1 );
                             parents.firstElementChild.classList.remove ("active");
                             parents.lastElementChild.classList.add ("active");
-                            parents.style.transform = "translateX(" + ( action ) + "px)";
+                            parents.style.transform = "translate3d(" + ( action ) + "px,0px,0px)";
                         } else {
                             if (query2 || query3 && Math.abs (helper.change.x) > 75) {
                                 let active = parents.querySelector (".slide-item.active");
                                 action = -width * ( indis - 1 );
                                 active.classList.remove ("active");
                                 active.previousElementSibling.classList.add ("active");
-                                parents.style.transform = "translateX(" + ( action + width ) + "px)";
+                                parents.style.transform = "translate3d(" + ( action + width ) + "px,0px,0px)";
                             }
                         }
                     }
